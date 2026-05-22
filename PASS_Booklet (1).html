@@ -1,0 +1,820 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PASS Booklet — Let Me Tell You About South Sudan in 30 Minutes</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Lora:ital,wght@0,400;0,600;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --ss-black: #1a1a1a;
+    --ss-red: #CE1126;
+    --ss-green: #078930;
+    --ss-blue: #0885D7;
+    --ss-yellow: #FDDE17;
+    --ss-light: #F8F6F0;
+    --ss-warm: #F2EDE3;
+    --text-dark: #1a1a1a;
+    --text-mid: #444;
+    --text-soft: #777;
+    --border: rgba(0,0,0,0.1);
+  }
+
+  body {
+    background: #e8e3d8;
+    font-family: 'DM Sans', sans-serif;
+    color: var(--text-dark);
+    min-height: 100vh;
+  }
+
+  /* Navigation */
+  .nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: var(--ss-black);
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 2rem; height: 56px;
+  }
+  .nav-logo { color: var(--ss-yellow); font-family: 'DM Sans', sans-serif; font-weight: 600; font-size: 14px; letter-spacing: 0.1em; }
+  .nav-pages { display: flex; gap: 4px; }
+  .nav-dot {
+    width: 28px; height: 28px; border-radius: 50%; border: 1.5px solid rgba(255,255,255,0.2);
+    background: transparent; color: rgba(255,255,255,0.4); font-size: 11px;
+    cursor: pointer; display: flex; align-items: center; justify-content: center;
+    transition: all 0.2s; font-family: 'DM Sans', sans-serif;
+  }
+  .nav-dot.active { background: var(--ss-yellow); border-color: var(--ss-yellow); color: #000; }
+  .nav-dot:hover:not(.active) { border-color: rgba(255,255,255,0.6); color: rgba(255,255,255,0.8); }
+  .nav-arrows { display: flex; gap: 8px; }
+  .nav-btn {
+    background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15);
+    color: #fff; padding: 6px 14px; border-radius: 6px; cursor: pointer;
+    font-size: 13px; font-family: 'DM Sans', sans-serif; transition: background 0.2s;
+  }
+  .nav-btn:hover { background: rgba(255,255,255,0.15); }
+  .nav-btn:disabled { opacity: 0.3; cursor: default; }
+
+  /* Pages */
+  .booklet { padding-top: 56px; }
+  .page { display: none; min-height: calc(100vh - 56px); }
+  .page.visible { display: block; }
+
+  /* ======================== PAGE 1: COVER ======================== */
+  .cover {
+    background: var(--ss-green);
+    min-height: calc(100vh - 56px);
+    position: relative; overflow: hidden;
+    display: flex; flex-direction: column;
+  }
+  .cover-flag-top { height: 16px; background: var(--ss-black); }
+  .cover-flag-bottom { height: 16px; background: var(--ss-black); margin-top: auto; }
+  .cover-body { display: flex; flex: 1; }
+  .cover-left-panel {
+    width: 80px; background: var(--ss-blue); flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+    position: relative;
+  }
+  .cover-left-panel::after {
+    content: '';
+    position: absolute; right: 0; top: 0; bottom: 0;
+    width: 16px; background: var(--ss-red);
+  }
+  .cover-star-wrap { z-index: 1; }
+  .cover-star { color: var(--ss-yellow); font-size: 36px; line-height: 1; }
+  .cover-main { flex: 1; padding: 4rem 3rem 3rem 3.5rem; display: flex; flex-direction: column; justify-content: space-between; }
+  .cover-eyebrow {
+    display: inline-block;
+    background: rgba(0,0,0,0.25); border: 1px solid rgba(255,255,255,0.3);
+    color: rgba(255,255,255,0.9); font-size: 11px; letter-spacing: 0.14em;
+    text-transform: uppercase; padding: 5px 12px; border-radius: 4px; margin-bottom: 1.5rem;
+  }
+  .cover-h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(28px, 5vw, 54px);
+    color: #fff; line-height: 1.08; margin-bottom: 1.5rem;
+    font-weight: 900;
+  }
+  .cover-h1 em { color: var(--ss-yellow); font-style: normal; }
+  .cover-tagline {
+    font-family: 'Lora', serif; font-style: italic;
+    color: rgba(255,255,255,0.75); font-size: clamp(14px, 2vw, 18px);
+    line-height: 1.6; max-width: 520px; margin-bottom: 2.5rem;
+  }
+  .cover-cta-row { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+  .cover-cta {
+    background: var(--ss-yellow); color: #000;
+    font-weight: 600; font-size: 14px; padding: 12px 28px; border-radius: 6px;
+    border: none; cursor: pointer; font-family: 'DM Sans', sans-serif;
+    transition: transform 0.15s, opacity 0.15s;
+  }
+  .cover-cta:hover { transform: translateY(-1px); opacity: 0.92; }
+  .cover-time { color: rgba(255,255,255,0.5); font-size: 13px; }
+  .cover-footer { color: rgba(255,255,255,0.4); font-size: 12px; letter-spacing: 0.06em; }
+  .cover-deco {
+    position: absolute; right: -60px; top: 50%; transform: translateY(-50%);
+    width: 300px; height: 300px; border-radius: 50%;
+    border: 40px solid rgba(255,255,255,0.04);
+    pointer-events: none;
+  }
+  .cover-deco2 {
+    position: absolute; right: 80px; bottom: 60px;
+    width: 160px; height: 160px; border-radius: 50%;
+    border: 25px solid rgba(255,255,255,0.03);
+    pointer-events: none;
+  }
+
+  /* ======================== PAGE 2: SOUTH SUDAN CONTEXT ======================== */
+  .page-inner { max-width: 860px; margin: 0 auto; padding: 3rem 2rem; }
+  .page-label {
+    font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase;
+    color: var(--ss-green); font-weight: 600; margin-bottom: 0.5rem;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .page-label::after { content: ''; flex: 1; height: 1px; background: var(--ss-green); opacity: 0.3; }
+  .page-h2 {
+    font-family: 'Playfair Display', serif; font-size: clamp(22px, 4vw, 38px);
+    color: var(--text-dark); line-height: 1.2; margin-bottom: 1rem;
+  }
+  .page-h2 em { color: var(--ss-red); font-style: normal; }
+  .page-intro {
+    font-family: 'Lora', serif; font-style: italic;
+    font-size: 17px; color: var(--text-mid); line-height: 1.75;
+    border-left: 3px solid var(--ss-yellow); padding-left: 1.25rem;
+    margin-bottom: 2rem;
+  }
+  .body-text { font-size: 15px; color: var(--text-mid); line-height: 1.8; margin-bottom: 1.25rem; }
+  .body-text strong { color: var(--text-dark); }
+
+  .stat-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin: 2rem 0; }
+  .stat-card {
+    background: #fff; border: 0.5px solid var(--border); border-radius: 10px;
+    padding: 1.25rem; text-align: center;
+    border-top: 3px solid var(--ss-green);
+  }
+  .stat-card.red { border-top-color: var(--ss-red); }
+  .stat-card.blue { border-top-color: var(--ss-blue); }
+  .stat-num { font-family: 'Playfair Display', serif; font-size: 32px; color: var(--text-dark); }
+  .stat-desc { font-size: 12px; color: var(--text-soft); margin-top: 4px; line-height: 1.4; }
+
+  .flag-divider { display: flex; height: 5px; border-radius: 3px; overflow: hidden; margin: 2rem 0; }
+  .flag-divider div { flex: 1; }
+
+  /* Photo placeholder */
+  .photo-box {
+    background: var(--ss-warm); border: 2px dashed rgba(0,0,0,0.15); border-radius: 10px;
+    padding: 2rem; text-align: center; margin: 1.5rem 0;
+  }
+  .photo-box-icon { font-size: 32px; margin-bottom: 0.5rem; opacity: 0.4; }
+  .photo-box-label { font-size: 13px; color: var(--text-soft); font-style: italic; }
+  .photo-box-desc { font-size: 12px; color: var(--text-soft); margin-top: 4px; }
+
+  /* ======================== PAGE 3: CONFLICT + CHALLENGE ======================== */
+  .challenge-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin: 2rem 0; }
+  .challenge-card {
+    background: #fff; border: 0.5px solid var(--border); border-radius: 10px; padding: 1.5rem;
+  }
+  .challenge-icon { font-size: 22px; margin-bottom: 0.75rem; }
+  .challenge-title { font-family: 'Playfair Display', serif; font-size: 17px; margin-bottom: 0.5rem; }
+  .challenge-body { font-size: 13px; color: var(--text-mid); line-height: 1.7; }
+  .highlight-block {
+    background: var(--ss-black); color: #fff;
+    border-radius: 10px; padding: 1.75rem 2rem; margin: 2rem 0;
+  }
+  .highlight-block p { font-size: 15px; line-height: 1.8; color: rgba(255,255,255,0.85); }
+  .highlight-block strong { color: var(--ss-yellow); }
+  .country-pills { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 1rem; }
+  .pill {
+    background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2);
+    color: rgba(255,255,255,0.8); font-size: 12px; padding: 4px 12px; border-radius: 20px;
+  }
+  .pill.home { background: rgba(253,222,23,0.15); border-color: rgba(253,222,23,0.4); color: var(--ss-yellow); }
+
+  /* ======================== PAGE 4: SCHOLAR SPOTLIGHT ======================== */
+  .scholar-stage {
+    background: var(--ss-warm); border-radius: 12px; padding: 2.5rem 2rem; margin: 2rem 0;
+  }
+  .scholar-before-after {
+    display: flex; align-items: center; gap: 1.5rem; margin-bottom: 2rem;
+    justify-content: center; flex-wrap: wrap;
+  }
+  .scholar-photo-wrap { text-align: center; }
+  .scholar-photo {
+    width: 140px; height: 180px; border-radius: 10px;
+    background: rgba(0,0,0,0.08); border: 2px dashed rgba(0,0,0,0.2);
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    position: relative; overflow: hidden;
+  }
+  .scholar-photo.before { border-color: var(--ss-red); }
+  .scholar-photo.after { border-color: var(--ss-green); }
+  .scholar-photo-label-top {
+    position: absolute; top: 8px; left: 50%; transform: translateX(-50%);
+    font-size: 9px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase;
+    padding: 3px 8px; border-radius: 3px; white-space: nowrap;
+  }
+  .before .scholar-photo-label-top { background: var(--ss-red); color: #fff; }
+  .after .scholar-photo-label-top { background: var(--ss-green); color: #fff; }
+  .scholar-photo-icon { font-size: 28px; opacity: 0.3; }
+  .scholar-photo-hint { font-size: 10px; color: var(--text-soft); text-align: center; margin-top: 6px; padding: 0 4px; font-style: italic; }
+  .scholar-arrow { font-size: 32px; color: var(--ss-green); font-weight: 300; }
+  .scholar-label { font-size: 12px; color: var(--text-soft); text-align: center; margin-top: 8px; }
+
+  /* Staff circles */
+  .staff-section { text-align: center; margin-top: 1.5rem; }
+  .staff-section-title { font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-soft); margin-bottom: 1.25rem; }
+  .staff-circles { display: flex; align-items: center; justify-content: center; gap: 16px; flex-wrap: wrap; }
+  .staff-circle {
+    width: 72px; height: 72px; border-radius: 50%;
+    background: var(--ss-blue); border: 3px solid #fff;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    cursor: default; position: relative;
+  }
+  .staff-circle.you {
+    background: var(--ss-black); border-color: var(--ss-yellow);
+    border-style: dashed;
+  }
+  .staff-circle-icon { font-size: 11px; color: rgba(255,255,255,0.6); }
+  .staff-circle-name { font-size: 9px; color: rgba(255,255,255,0.85); font-weight: 500; text-align: center; padding: 0 4px; line-height: 1.3; }
+  .staff-circle.you .staff-circle-name { color: var(--ss-yellow); font-size: 18px; }
+  .staff-circle-role { font-size: 9px; color: rgba(255,255,255,0.5); text-align: center; padding: 0 4px; }
+
+  /* Photo placeholder instruction */
+  .photo-instruction {
+    font-size: 11px; color: var(--ss-blue); background: rgba(8,133,215,0.08);
+    border: 1px solid rgba(8,133,215,0.2); border-radius: 6px;
+    padding: 8px 12px; margin-top: 8px; text-align: center; font-style: italic;
+  }
+
+  /* ======================== PAGE 5: PROGRAMS ======================== */
+  .programs-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin: 2rem 0; }
+  .program-card {
+    background: #fff; border: 0.5px solid var(--border); border-radius: 10px; padding: 1.5rem;
+    position: relative; overflow: hidden;
+  }
+  .program-card::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px;
+  }
+  .program-card.green::before { background: var(--ss-green); }
+  .program-card.blue::before { background: var(--ss-blue); }
+  .program-card.red::before { background: var(--ss-red); }
+  .program-card.yellow::before { background: var(--ss-yellow); }
+  .prog-icon { font-size: 26px; margin-bottom: 0.75rem; }
+  .prog-title { font-family: 'Playfair Display', serif; font-size: 16px; margin-bottom: 0.5rem; }
+  .prog-body { font-size: 13px; color: var(--text-mid); line-height: 1.7; }
+  .prog-tag {
+    display: inline-block; margin-top: 0.75rem;
+    font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase;
+    background: var(--ss-warm); color: var(--text-soft); padding: 3px 8px; border-radius: 4px;
+  }
+  .boys-note {
+    background: linear-gradient(135deg, #f8f4e8, #fff);
+    border: 1px solid rgba(253,222,23,0.4); border-radius: 10px;
+    padding: 1.5rem; margin: 1.5rem 0;
+  }
+  .boys-note-title { font-family: 'Playfair Display', serif; font-size: 17px; margin-bottom: 0.5rem; }
+  .boys-note-body { font-size: 14px; color: var(--text-mid); line-height: 1.75; }
+
+  /* ======================== PAGE 6: SDGs ======================== */
+  .sdg-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin: 2rem 0; }
+  .sdg-card { border-radius: 12px; overflow: hidden; }
+  .sdg-header { padding: 1.25rem 1.5rem; }
+  .sdg-card.sdg4 .sdg-header { background: #C5192D; }
+  .sdg-card.sdg5 .sdg-header { background: #FF3A21; }
+  .sdg-num { font-family: 'Playfair Display', serif; font-size: 48px; color: rgba(255,255,255,0.25); line-height: 1; }
+  .sdg-name { font-size: 13px; font-weight: 600; color: #fff; letter-spacing: 0.05em; text-transform: uppercase; margin-top: -8px; }
+  .sdg-body { background: #fff; border: 0.5px solid var(--border); border-radius: 0 0 12px 12px; padding: 1.25rem; }
+  .sdg-item { display: flex; gap: 10px; margin-bottom: 10px; align-items: flex-start; }
+  .sdg-dot { width: 6px; height: 6px; border-radius: 50%; margin-top: 7px; flex-shrink: 0; }
+  .sdg4 .sdg-dot { background: #C5192D; }
+  .sdg5 .sdg-dot { background: #FF3A21; }
+  .sdg-text { font-size: 13px; color: var(--text-mid); line-height: 1.6; }
+  .sdg-text strong { color: var(--text-dark); }
+
+  /* ======================== PAGE 7: CALL TO ACTION ======================== */
+  .cta-page { background: var(--ss-black); min-height: calc(100vh - 56px); }
+  .cta-flag { display: flex; height: 10px; }
+  .cta-flag div { flex: 1; }
+  .cta-inner { max-width: 740px; margin: 0 auto; padding: 4rem 2rem; }
+  .cta-eyebrow { font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ss-yellow); margin-bottom: 1rem; }
+  .cta-h2 { font-family: 'Playfair Display', serif; font-size: clamp(28px, 5vw, 48px); color: #fff; line-height: 1.15; margin-bottom: 1.5rem; }
+  .cta-h2 em { color: var(--ss-yellow); font-style: normal; }
+  .cta-pull {
+    font-family: 'Lora', serif; font-style: italic;
+    font-size: 18px; color: rgba(255,255,255,0.7); line-height: 1.7;
+    border-left: 3px solid var(--ss-red); padding-left: 1.25rem;
+    margin-bottom: 2.5rem;
+  }
+  .ways-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-bottom: 2.5rem; }
+  .way-card {
+    background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 10px; padding: 1.25rem; text-align: center;
+  }
+  .way-icon { font-size: 26px; margin-bottom: 0.5rem; }
+  .way-title { font-size: 14px; font-weight: 600; color: #fff; margin-bottom: 0.4rem; }
+  .way-desc { font-size: 12px; color: rgba(255,255,255,0.45); line-height: 1.5; }
+  .cta-bottom { display: flex; align-items: center; gap: 1rem; flex-wrap: wrap; }
+  .cta-main-btn {
+    background: var(--ss-yellow); color: #000; font-weight: 600;
+    font-size: 15px; padding: 14px 32px; border-radius: 8px; border: none;
+    cursor: pointer; font-family: 'DM Sans', sans-serif; transition: opacity 0.2s;
+  }
+  .cta-main-btn:hover { opacity: 0.88; }
+  .cta-org-line { color: rgba(255,255,255,0.35); font-size: 13px; }
+  .cta-internet-note {
+    margin-top: 2rem; padding: 1.25rem 1.5rem;
+    background: rgba(255,255,255,0.04); border-radius: 8px;
+    border-left: 3px solid var(--ss-blue);
+  }
+  .cta-internet-note p { font-size: 13px; color: rgba(255,255,255,0.55); line-height: 1.7; }
+  .cta-internet-note strong { color: rgba(255,255,255,0.8); }
+
+  /* Responsive */
+  @media (max-width: 600px) {
+    .stat-grid { grid-template-columns: 1fr; }
+    .challenge-grid { grid-template-columns: 1fr; }
+    .programs-grid { grid-template-columns: 1fr; }
+    .sdg-grid { grid-template-columns: 1fr; }
+    .ways-grid { grid-template-columns: 1fr; }
+    .inner-spread { grid-template-columns: 1fr; }
+    .cover-main { padding: 2.5rem 1.5rem 2rem 2rem; }
+    .page-inner { padding: 2rem 1.25rem; }
+    .cta-inner { padding: 2.5rem 1.25rem; }
+  }
+
+  .divider { height: 1px; background: var(--border); margin: 2rem 0; }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav">
+  <span class="nav-logo">PASS · 2025</span>
+  <div class="nav-pages" id="navDots"></div>
+  <div class="nav-arrows">
+    <button class="nav-btn" id="prevBtn" onclick="changePage(-1)" disabled>← Prev</button>
+    <button class="nav-btn" id="nextBtn" onclick="changePage(1)">Next →</button>
+  </div>
+</nav>
+
+<div class="booklet">
+
+<!-- ======================== PAGE 1: COVER ======================== -->
+<div class="page visible" id="page-1">
+  <div class="cover">
+    <div class="cover-flag-top"></div>
+    <div class="cover-body">
+      <div class="cover-left-panel">
+        <div class="cover-star-wrap">
+          <div class="cover-star">★</div>
+        </div>
+      </div>
+      <div class="cover-main">
+        <div>
+          <div class="cover-eyebrow">Padoc Area Scholars Society — PASS</div>
+          <h1 class="cover-h1">Let Me Tell You About<br><em>South Sudan</em><br>in 30 Minutes</h1>
+          <p class="cover-tagline">
+            Ever heard of a country named the world's poorest by the UN?<br>
+            That country is made of humans — women most of all.<br>
+            This is their story, and the story of those who are fighting for them.
+          </p>
+          <div class="cover-cta-row">
+            <button class="cover-cta" onclick="changePage(1)">Begin Reading →</button>
+            <span class="cover-time">📖 ~30 minute read</span>
+          </div>
+        </div>
+        <div class="cover-footer">PASS · Padoc Area Scholars Society · South Sudan & Diaspora</div>
+      </div>
+    </div>
+    <div class="cover-flag-bottom"></div>
+    <div class="cover-deco"></div>
+    <div class="cover-deco2"></div>
+  </div>
+</div>
+
+<!-- ======================== PAGE 2: SOUTH SUDAN ======================== -->
+<div class="page" id="page-2">
+  <div class="page-inner">
+    <div class="page-label">Chapter 1 — The Country</div>
+    <h2 class="page-h2">South Sudan: The World's Youngest Nation,<br><em>and Its Most Forgotten</em></h2>
+
+    <p class="page-intro">
+      The United Nations has named South Sudan the poorest country on earth. Behind that word — poorest — are millions of people, real communities, real ambitions, and real grief.
+    </p>
+
+    <div class="flag-divider">
+      <div style="background:#000;flex:1"></div>
+      <div style="background:#CE1126;flex:1"></div>
+      <div style="background:#078930;flex:1"></div>
+      <div style="background:#0885D7;flex:2"></div>
+      <div style="background:#FDDE17;flex:0.5"></div>
+    </div>
+
+    <p class="body-text">
+      South Sudan gained independence in 2011 — the world's newest country. But independence did not bring peace. Years of civil war, tribal conflict, and economic collapse have left the country deeply fragile. Infrastructure barely exists. Hospitals are under-resourced. Schools lack teachers, desks, and books.
+    </p>
+
+    <p class="body-text">
+      <strong>Women form the majority of the population</strong> — yet they carry a disproportionate share of the suffering. In many communities, girls are seen not as future leaders, doctors, or engineers, but as bargaining chips: married off young, often before they have even completed primary school.
+    </p>
+
+    <div class="stat-grid">
+      <div class="stat-card">
+        <div class="stat-num">#1</div>
+        <div class="stat-desc">Poorest country in the world, per UN ranking</div>
+      </div>
+      <div class="stat-card red">
+        <div class="stat-num">52%</div>
+        <div class="stat-desc">Estimated female population share</div>
+      </div>
+      <div class="stat-card blue">
+        <div class="stat-num">2011</div>
+        <div class="stat-desc">Year South Sudan became an independent nation</div>
+      </div>
+    </div>
+
+    <p class="body-text">
+      The country sits landlocked in East-Central Africa, bordered by Sudan, Ethiopia, Kenya, Uganda, the Democratic Republic of Congo, and the Central African Republic. It is rich in oil — yet most of its people live without clean water, reliable electricity, or roads.
+    </p>
+
+    <div class="photo-box">
+      <div class="photo-box-icon">🗺️</div>
+      <div class="photo-box-label">[ INSERT: Map of South Sudan showing borders and key cities ]</div>
+      <div class="photo-box-desc">Recommended: a simple outline map highlighting Juba, Padoc area, and border countries. Size: full width, ~240px tall.</div>
+    </div>
+
+    <p class="body-text">
+      This is the context in which PASS operates. Not an abstract poverty statistic — but a people with names, faces, dreams, and the capacity to change everything, if only given the chance.
+    </p>
+  </div>
+</div>
+
+<!-- ======================== PAGE 3: CONFLICT + DISPLACEMENT ======================== -->
+<div class="page" id="page-3">
+  <div class="page-inner">
+    <div class="page-label">Chapter 2 — The Challenges</div>
+    <h2 class="page-h2">What These Young People Face<br><em>Every Day</em></h2>
+
+    <p class="page-intro">
+      Understanding PASS means first understanding what our scholars live through — before they ever sit down in a classroom.
+    </p>
+
+    <div class="challenge-grid">
+      <div class="challenge-card">
+        <div class="challenge-icon">💍</div>
+        <div class="challenge-title">Early & Forced Marriage</div>
+        <div class="challenge-body">
+          In many communities across South Sudan, girls are married off as young as 12 or 13. This is not just tradition — it is an economic transaction. A daughter becomes a bride price. Education ends. Childhood ends. The cycle of poverty continues.
+        </div>
+      </div>
+      <div class="challenge-card">
+        <div class="challenge-icon">🔫</div>
+        <div class="challenge-title">Armed Conflict & Insecurity</div>
+        <div class="challenge-body">
+          Tribal violence and political conflict have torn apart families and communities. Young men are recruited — sometimes by force — into armed groups. Young women face gender-based violence. Schools are burned, teachers flee, and education becomes impossible.
+        </div>
+      </div>
+      <div class="challenge-card">
+        <div class="challenge-icon">🏕️</div>
+        <div class="challenge-title">Displacement & Refugee Life</div>
+        <div class="challenge-body">
+          Hundreds of thousands of South Sudanese have fled across borders. Our scholars are among them. Living in refugee camps or host communities in Kenya, Uganda, and Ethiopia — far from home, with uncertain futures. Yet still wanting to learn.
+        </div>
+      </div>
+      <div class="challenge-card">
+        <div class="challenge-icon">📵</div>
+        <div class="challenge-title">No Internet. No Access. No Information.</div>
+        <div class="challenge-body">
+          Most of our scholars do not have reliable internet access. They cannot search for scholarships. They cannot apply online. They cannot discover what opportunities exist in the world for people like them. This isn't a gap — it's a wall. PASS tears it down.
+        </div>
+      </div>
+    </div>
+
+    <div class="highlight-block">
+      <p>
+        <strong>PASS is not limited to South Sudan.</strong> Because the crisis is not contained within borders, neither are we. We actively support South Sudanese refugees across:
+      </p>
+      <div class="country-pills">
+        <span class="pill home">🇸🇸 South Sudan</span>
+        <span class="pill">🇰🇪 Kenya</span>
+        <span class="pill">🇺🇬 Uganda</span>
+        <span class="pill">🇪🇹 Ethiopia</span>
+      </div>
+      <p style="margin-top:1rem;">
+        Wherever our scholars are, we find them. We meet them where they are — because waiting for them to come to safety first would mean leaving them behind forever.
+      </p>
+    </div>
+
+    <div class="photo-box">
+      <div class="photo-box-icon">📸</div>
+      <div class="photo-box-label">[ INSERT: Photo of a refugee camp or border crossing context ]</div>
+      <div class="photo-box-desc">Suggested: a respectful, human-centered photo showing living conditions or community — not sensationalized. Landscape orientation, full width.</div>
+    </div>
+
+    <p class="body-text">
+      <strong>Poverty is not only about money.</strong> It is about the absence of choices. When a girl cannot go to school because her family needs her bride price, that is poverty. When a boy is told his only future is a gun, that is poverty. PASS's work is about restoring choices.
+    </p>
+  </div>
+</div>
+
+<!-- ======================== PAGE 4: SCHOLAR SPOTLIGHT ======================== -->
+<div class="page" id="page-4">
+  <div class="page-inner">
+    <div class="page-label">Chapter 3 — A Scholar's Journey</div>
+    <h2 class="page-h2">Before and After:<br><em>What PASS Support Looks Like</em></h2>
+
+    <p class="body-text">
+      Behind every statistic is a person. Here is what transformation looks like — not in numbers, but in a life.
+    </p>
+
+    <div class="scholar-stage">
+      <div class="scholar-before-after">
+        <div class="scholar-photo-wrap">
+          <div class="scholar-photo before">
+            <div class="scholar-photo-label-top">Before PASS</div>
+            <div class="scholar-photo-icon">👤</div>
+            <div class="scholar-photo-hint">Insert: scholar's early photo — in the camp, or before enrollment</div>
+          </div>
+          <div class="scholar-label">Uncertainty.<br>No path forward.</div>
+        </div>
+        <div class="scholar-arrow">→</div>
+        <div class="scholar-photo-wrap">
+          <div class="scholar-photo after">
+            <div class="scholar-photo-label-top">After PASS</div>
+            <div class="scholar-photo-icon">🎓</div>
+            <div class="scholar-photo-hint">Insert: scholar's recent photo — in school, with books, or in uniform</div>
+          </div>
+          <div class="scholar-label">Education.<br>A future named.</div>
+        </div>
+      </div>
+      <div class="photo-instruction">
+        📷 Replace the two boxes above with real before/after photos of a PASS scholar (with their consent). Keep photos approx. 140×180px or similar portrait ratio.
+      </div>
+
+      <div class="staff-section">
+        <div class="staff-section-title">The team behind every scholar</div>
+        <div class="staff-circles">
+          <!-- Staff Circle 1 -->
+          <div class="staff-circle" style="background: #078930;">
+            <div style="font-size:22px;">👤</div>
+            <div class="staff-circle-name">Staff 1</div>
+            <div class="staff-circle-role">Director</div>
+          </div>
+          <!-- Staff Circle 2 -->
+          <div class="staff-circle" style="background: #0885D7;">
+            <div style="font-size:22px;">👤</div>
+            <div class="staff-circle-name">Staff 2</div>
+            <div class="staff-circle-role">Programs</div>
+          </div>
+          <!-- Staff Circle 3 -->
+          <div class="staff-circle" style="background: #CE1126;">
+            <div style="font-size:22px;">👤</div>
+            <div class="staff-circle-name">Staff 3</div>
+            <div class="staff-circle-role">Outreach</div>
+          </div>
+          <!-- Staff Circle 4 -->
+          <div class="staff-circle" style="background: #555;">
+            <div style="font-size:22px;">👤</div>
+            <div class="staff-circle-name">Staff 4</div>
+            <div class="staff-circle-role">Mentorship</div>
+          </div>
+          <!-- YOU -->
+          <div class="staff-circle you">
+            <div class="staff-circle-name">❓</div>
+            <div class="staff-circle-role" style="color: rgba(253,222,23,0.6); font-size:9px;">You?</div>
+          </div>
+        </div>
+        <div class="photo-instruction" style="margin-top:1rem;">
+          📷 Replace the grey staff circles with real circular staff photos. Each circle is 72×72px. The last circle (❓) stays — it is your call to action.
+        </div>
+      </div>
+    </div>
+
+    <p class="body-text" style="margin-top: 1.5rem;">
+      Every scholar has a name and a story that statistics will never capture. We keep their stories here not to make them objects of pity, but to make them visible — because when you are seen, you cannot be ignored.
+    </p>
+  </div>
+</div>
+
+<!-- ======================== PAGE 5: PROGRAMS ======================== -->
+<div class="page" id="page-5">
+  <div class="page-inner">
+    <div class="page-label">Chapter 4 — What PASS Does</div>
+    <h2 class="page-h2">Our Programs:<br><em>More Than Schoolbooks</em></h2>
+
+    <p class="page-intro">
+      Education without safety, confidence, and opportunity is incomplete. PASS builds all of it — together.
+    </p>
+
+    <div class="programs-grid">
+      <div class="program-card green">
+        <div class="prog-icon">📚</div>
+        <div class="prog-title">Scholarships & School Access</div>
+        <div class="prog-body">
+          We identify scholars without the means to pay school fees and connect them to funding — grants, bursaries, and donor support — that they could never find on their own, because they have no internet, no guide, and no network. We are their network.
+        </div>
+        <span class="prog-tag">SDG 4 · Quality Education</span>
+      </div>
+      <div class="program-card blue">
+        <div class="prog-icon">🥋</div>
+        <div class="prog-title">Self-Defense & Mental Resilience (ESD Global)</div>
+        <div class="prog-body">
+          Adopted from ESD Global, our self-defense program is not just physical. It re-shapes the mind. For a girl who has survived gender-based violence, or a boy who has witnessed conflict, this program restores a sense of agency, safety, and self-worth. The body learns to stand firm — and so does the spirit.
+        </div>
+        <span class="prog-tag">Empowerment · Safety · ESD Global</span>
+      </div>
+      <div class="program-card red">
+        <div class="prog-icon">💼</div>
+        <div class="prog-title">Career Development</div>
+        <div class="prog-body">
+          A scholarship without a career path is a bridge that ends mid-air. We provide career guidance, mentorship, and exposure to professional pathways — helping scholars understand what they can become and how to get there, step by step.
+        </div>
+        <span class="prog-tag">SDG 4 · Decent Work & Growth</span>
+      </div>
+      <div class="program-card yellow">
+        <div class="prog-icon">🤝</div>
+        <div class="prog-title">Mentorship & Community</div>
+        <div class="prog-body">
+          Isolation is one of the greatest threats a scholar faces. We build communities — connecting scholars to mentors, to each other, and to PASS alumni who have walked the same path. You are not alone in this.
+        </div>
+        <span class="prog-tag">SDG 4 & 5 · Community</span>
+      </div>
+    </div>
+
+    <div class="boys-note">
+      <div class="boys-note-title">Why Boys Are Included — Even Though Women Come First</div>
+      <div class="boys-note-body">
+        <p style="margin-bottom: 0.75rem;">Our focus is firmly on women and girls, because they bear the greatest burden of inequality in South Sudan. But we do not exclude young men.</p>
+        <p style="margin-bottom: 0.75rem;">Here is why: <strong>the boy who grows up educated, mentored, and shown a different vision of manhood does not become the man who forces his daughter into marriage.</strong> He becomes a father who sends her to school.</p>
+        <p>Gender equality is not only a women's issue. It is a human project. Boys who are raised with dignity and purpose become allies, husbands, brothers, and fathers who change the cycle — not continue it.</p>
+      </div>
+    </div>
+
+    <div class="photo-box">
+      <div class="photo-box-icon">📸</div>
+      <div class="photo-box-label">[ INSERT: Photo of a PASS program activity — classroom, career workshop, or self-defense session ]</div>
+      <div class="photo-box-desc">Landscape photo, full width. Show the energy and humanity of participants — not posed, if possible.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ======================== PAGE 6: SDGs ======================== -->
+<div class="page" id="page-6">
+  <div class="page-inner">
+    <div class="page-label">Chapter 5 — Our Global Commitments</div>
+    <h2 class="page-h2">PASS and the<br><em>Sustainable Development Goals</em></h2>
+
+    <p class="body-text">
+      PASS's work is grounded in two of the UN's Sustainable Development Goals. These are not just boxes we tick — they describe what we are building, every single day.
+    </p>
+
+    <div class="sdg-grid">
+      <div class="sdg-card sdg4">
+        <div class="sdg-header">
+          <div class="sdg-num">04</div>
+          <div class="sdg-name">Quality Education</div>
+        </div>
+        <div class="sdg-body">
+          <div class="sdg-item">
+            <div class="sdg-dot"></div>
+            <div class="sdg-text"><strong>It's quality because it doesn't stop at the classroom door.</strong> PASS wraps education in mentorship, career guidance, and emotional support.</div>
+          </div>
+          <div class="sdg-item">
+            <div class="sdg-dot"></div>
+            <div class="sdg-text"><strong>It's quality because we reach the unreached.</strong> Those without internet, without contacts, without means — they are our first priority.</div>
+          </div>
+          <div class="sdg-item">
+            <div class="sdg-dot"></div>
+            <div class="sdg-text"><strong>It's quality because we follow the scholar.</strong> Wherever they are — in South Sudan, in a Kenyan camp, in Uganda — we do not abandon them.</div>
+          </div>
+          <div class="sdg-item">
+            <div class="sdg-dot"></div>
+            <div class="sdg-text"><strong>It's quality because we think long-term.</strong> One educated generation changes the next. That is the investment we are making.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="sdg-card sdg5">
+        <div class="sdg-header">
+          <div class="sdg-num">05</div>
+          <div class="sdg-name">Gender Equality</div>
+        </div>
+        <div class="sdg-body">
+          <div class="sdg-item">
+            <div class="sdg-dot"></div>
+            <div class="sdg-text"><strong>It's equality because we challenge early marriage directly.</strong> We advocate for girls' right to stay in school, even when their communities push back.</div>
+          </div>
+          <div class="sdg-item">
+            <div class="sdg-dot"></div>
+            <div class="sdg-text"><strong>It's equality because we equip women with self-defense.</strong> Physical safety and the ability to protect oneself is a foundation of freedom.</div>
+          </div>
+          <div class="sdg-item">
+            <div class="sdg-dot"></div>
+            <div class="sdg-text"><strong>It's equality because we change minds around them.</strong> We include boys and young men so that the next generation normalizes equality — not just tolerates it.</div>
+          </div>
+          <div class="sdg-item">
+            <div class="sdg-dot"></div>
+            <div class="sdg-text"><strong>It's equality because we follow displaced women.</strong> A refugee woman should not lose her right to education just because she crossed a border.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="highlight-block" style="margin-top: 2rem;">
+      <p>
+        These goals are interconnected. A girl who is educated is less likely to be forced into early marriage. A woman who is safe and confident is more likely to stay in school. A community that values gender equality is one that invests in its own future.
+        <strong> PASS lives at the intersection of both.</strong>
+      </p>
+    </div>
+  </div>
+</div>
+
+<!-- ======================== PAGE 7: CTA ======================== -->
+<div class="page" id="page-7">
+  <div class="cta-page">
+    <div class="cta-flag">
+      <div style="background:#078930;"></div>
+      <div style="background:#CE1126;"></div>
+      <div style="background:#000;"></div>
+      <div style="background:#0885D7;flex:2"></div>
+      <div style="background:#FDDE17;flex:0.5"></div>
+    </div>
+    <div class="cta-inner">
+      <div class="cta-eyebrow">Padoc Area Scholars Society — PASS</div>
+      <h2 class="cta-h2">Help Exists.<br><em>More Is Yet to Be Done.</em><br>We Can't Do This Alone.</h2>
+
+      <p class="cta-pull">
+        "For a country that has a history of subjecting women to early marriages — what then becomes of those who desire to return to school? There is help. And still more is yet to be done. That is why PASS needs you."
+      </p>
+
+      <div class="ways-grid">
+        <div class="way-card">
+          <div class="way-icon">💛</div>
+          <div class="way-title">Donate</div>
+          <div class="way-desc">Fund a scholar's school fees, books, or living costs. Every contribution reaches a real person.</div>
+        </div>
+        <div class="way-card">
+          <div class="way-icon">🌐</div>
+          <div class="way-title">Volunteer</div>
+          <div class="way-desc">Offer mentorship, career guidance, or technical skills. Your expertise is someone's breakthrough.</div>
+        </div>
+        <div class="way-card">
+          <div class="way-icon">📢</div>
+          <div class="way-title">Amplify</div>
+          <div class="way-desc">Share this story. Tell someone. The scholars without internet need people like you to be their voice.</div>
+        </div>
+      </div>
+
+      <div class="cta-bottom">
+        <button class="cta-main-btn">Support PASS Today →</button>
+        <span class="cta-org-line">passscholars.org · contact@passscholars.org</span>
+      </div>
+
+      <div class="cta-internet-note">
+        <p>
+          <strong>A note on why your reach matters:</strong> Our scholars in South Sudan, Kenya, Uganda, and Ethiopia do not have reliable internet. They cannot discover grants, apply online, or connect with global opportunities by themselves. You can. Every person who reads this booklet and shares it is doing what the internet cannot do for them — creating a human bridge to a better future. <strong>That is the point. That is PASS.</strong>
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+
+</div><!-- end booklet -->
+
+<script>
+  let current = 1;
+  const total = 7;
+  const pageLabels = ['Cover', 'South Sudan', 'Challenges', 'Scholars', 'Programs', 'SDGs', 'Join Us'];
+
+  function buildDots() {
+    const container = document.getElementById('navDots');
+    container.innerHTML = '';
+    for (let i = 1; i <= total; i++) {
+      const btn = document.createElement('button');
+      btn.className = 'nav-dot' + (i === current ? ' active' : '');
+      btn.title = pageLabels[i-1];
+      btn.textContent = i;
+      btn.onclick = () => goTo(i);
+      container.appendChild(btn);
+    }
+  }
+
+  function goTo(n) {
+    document.getElementById('page-' + current).classList.remove('visible');
+    current = n;
+    document.getElementById('page-' + current).classList.add('visible');
+    document.getElementById('prevBtn').disabled = current === 1;
+    document.getElementById('nextBtn').disabled = current === total;
+    buildDots();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  function changePage(dir) {
+    const next = current + dir;
+    if (next >= 1 && next <= total) goTo(next);
+  }
+
+  buildDots();
+</script>
+</body>
+</html>
